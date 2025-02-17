@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import map from "../assets/map.png";
 import music from "../assets/music.png";
+import logo from "../assets/logo.png";
 import Fade from "../utils/Fade";
 import { slides } from "./data";
 
@@ -58,6 +59,12 @@ function Loading() {
         <div className="vignette"></div>
 
         <div className="loading-container">
+          <img
+            className="logo"
+            autoPlay
+            src={logo}
+            alt=""
+          />
           <div className="header">
             <img src={map} alt="" />
             <p>{slides[counter].label}</p>
