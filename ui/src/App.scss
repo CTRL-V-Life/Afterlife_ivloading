@@ -103,6 +103,19 @@ body {
         font-weight: bold
     }
 
+    .songname {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: .8vw;
+        font-weight: 500;
+        position: relative;
+        left: 10px;
+        span {
+            color: white;
+            font-weight: 400;
+            padding-right: 5px;
+        }
+    }
+
     .quote {
         color: rgba(255, 255, 255, 0.5);
         font-size: .8vw;

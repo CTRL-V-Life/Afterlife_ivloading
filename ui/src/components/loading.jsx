@@ -11,6 +11,41 @@ function Loading() {
   const [audiostate, setAudiostate] = useState(true)
   const audio = useRef();
 
+  const [randomTrack, setRandomTrack] = useState('');
+  const [randomTrackName, setRandomTrackName] = useState('');
+
+  const tracks = [
+    '../song/friday_vibrations.mp3',
+    '../song/highlands.mp3',
+  ];
+
+  const tracks_name = [
+    'Black Room Orchestra - Friday Vibrations',
+    'Black Room Orchestra - Highlands',
+  ]; 
+
+  const getRandomTrack = () => {
+    audio.current.load();
+    audio.current.play().catch((e) => console.log('Lecture automatique bloquée', e));
+    audio.current.volume = 0.3;
+    audio.current.onended = () => {
+      getRandomTrack();
+    };
+  };
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * tracks.length);
+    setRandomTrack(tracks[randomIndex]);
+    setRandomTrackName(tracks_name[randomIndex]);
+  }, []);
+  
+  useEffect(() => {
+    // Jouer la musique une fois que le src est défini
+    if (audio.current) {
+      getRandomTrack();
+    }
+  }, [randomTrack]);
+
   const handleaudio = () => {
     if (audiostate){
       audio.current.pause();
@@ -43,7 +78,7 @@ function Loading() {
       <div className="loading-wrapper">
         
         <audio ref={audio} autoPlay id="music">
-          <source src="../song/song.mp3" />
+          <source src={randomTrack} />
         </audio>
 
         {slides.map(
@@ -87,6 +122,7 @@ function Loading() {
 
             <div>
               <h>LOADING</h>
+              <h className="songname"><span>Musique:</span>{randomTrackName}</h>
               <div className="loading">
                 <div className="loading-background"></div>
                 <div
