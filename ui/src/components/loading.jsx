@@ -25,24 +25,26 @@ function Loading() {
   ]; 
 
   const getRandomTrack = () => {
-    audio.current.load();
-    audio.current.play().catch((e) => console.log('Lecture automatique bloquée', e));
-    audio.current.volume = 0.3;
-    audio.current.onended = () => {
-      getRandomTrack();
-    };
+    let newTrack;
+    do {
+      newTrack = tracks[Math.floor(Math.random() * tracks.length)];
+    } while (newTrack === randomTrack); // Évite de rejouer la même musique
+    setRandomTrack(newTrack);
+    setRandomTrackName(tracks_name[tracks.indexOf(newTrack)]);
   };
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * tracks.length);
-    setRandomTrack(tracks[randomIndex]);
-    setRandomTrackName(tracks_name[randomIndex]);
+    getRandomTrack();
+    if (audio.current) {
+      audio.current.volume = 0.5; // Volume à 50%
+    }
   }, []);
   
   useEffect(() => {
     // Jouer la musique une fois que le src est défini
     if (audio.current) {
-      getRandomTrack();
+      audio.current.load(); // Recharge la source
+      audio.current.play().catch((e) => console.log("Lecture bloquée", e));
     }
   }, [randomTrack]);
 
@@ -77,7 +79,7 @@ function Loading() {
     <>
       <div className="loading-wrapper">
         
-        <audio ref={audio} autoPlay id="music">
+        <audio ref={audio} autoPlay id="music" onEnded={getRandomTrack}>
           <source src={randomTrack} />
         </audio>
 
