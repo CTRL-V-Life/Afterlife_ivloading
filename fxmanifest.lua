@@ -14,6 +14,7 @@ files {
     'ui/dist/index.html',
     'ui/dist/assets/*.css',
     'ui/dist/assets/*.js',
+    'ui/dist/assets/*.png',
     'ui/images/*.png',
     'ui/song/*.mp3',
 }
